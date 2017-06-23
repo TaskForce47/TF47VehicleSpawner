@@ -77,7 +77,7 @@ class tf47_modules_vs_main_dialog
         class tf47_modules_vs_main_apply_button: tf47_modules_vs_base_rscbutton_main
         {
         	idc = 1603;
-        	action = "";
+        	action = "[] call tf47_modules_vs_fnc_spawnVehicle;";
         	text = "Spawnen"; //--- ToDo: Localize;
         	x = 0.578478 * safezoneW + safezoneX;
         	y = 0.64498 * safezoneH + safezoneY;

@@ -1,5 +1,6 @@
 waitUntil {(ctrlText 1001) != ""};
 
+lnbClear 1500;
 
 _nearestMarker = [tf47_modules_vs_config_allMarkers, player] call 
     BIS_fnc_nearestPosition;
@@ -24,5 +25,7 @@ _spawnCount = missionNameSpace getVariable
     lnbSetPicture [1500, [_row, 0], getText (_config >> "picture")];
     lnbSetPictureColor [1500,[_row,0],[1,1,1,1]];
     // ToDo: Test
-    lnbSetData [1500, _nearestMarker];
+    lnbSetData [1500, [_row, 0], _nearestMarker];
+    lnbSetData [1500, [_row, 1], _x];
+    lnbSetData [1500, [_row, 2], str (_curConfig select 2)];
 } forEach (_curConfig select 4);
