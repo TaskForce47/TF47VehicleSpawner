@@ -25,7 +25,5 @@ _spawnCount = missionNameSpace getVariable
     lnbSetPicture [1500, [_row, 0], getText (_config >> "picture")];
     lnbSetPictureColor [1500,[_row,0],[1,1,1,1]];
     // ToDo: Test
-    lnbSetData [1500, [_row, 0], _nearestMarker];
-    lnbSetData [1500, [_row, 1], _x];
-    lnbSetData [1500, [_row, 2], str (_curConfig select 2)];
+    lnbSetData [1500, [_row, 0], str _index];
 } forEach (_curConfig select 4);
