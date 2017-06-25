@@ -1,7 +1,16 @@
+/**
+ *  @author Willard
+ *  @description
+ *  Inits the main dialog
+ *  @params none
+ *  @return nothing
+ */
 waitUntil {(ctrlText 1001) != ""};
 
+// clear listbox
 lnbClear 1500;
 
+// get the nearest marker and determine the index
 _nearestMarker = [tf47_modules_vs_config_allMarkers, player] call 
     BIS_fnc_nearestPosition;
 
@@ -13,8 +22,8 @@ _index = -1;
     };
 } forEach tf47_modules_vs_config;
 
+// populate the listbox
 _curConfig = tf47_modules_vs_config select _index;
-
 _spawnCount = missionNameSpace getVariable 
     [format["tf47_core_vs_%1_spawnCount", _nearestMarker], 0];
 
