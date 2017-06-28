@@ -22,7 +22,7 @@ if(_spawnCount >= (_moduleConfig select 2)) exitWith {};
 // spawn the vehicle
 _vehicle = createVehicle [_vehicleClass, getMarkerPos _marker, [], 0,
 	"CAN_COLLIDE" ];
-
+_vehicle setDir (markerDir _marker);
 _vehicle setVariable ["tf47_core_vs_originMaker", _marker, true];
 
 missionNameSpace setVariable 
