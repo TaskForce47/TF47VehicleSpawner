@@ -19,6 +19,11 @@ _spawnCount = missionNameSpace getVariable
 // check for cap
 if(_spawnCount >= (_moduleConfig select 2)) exitWith {};
 
+if(count ((getMarkerPos _marker) nearObjects ["AllVehicles",5]) > 1)
+	exitWith {
+	systemChat "Es gibt nicht genug Platz um dieses Fahrzeug zu spawnen!";
+};
+
 // spawn the vehicle
 _vehicle = createVehicle [_vehicleClass, getMarkerPos _marker, [], 0,
 	"CAN_COLLIDE" ];
@@ -43,12 +48,12 @@ _vehicle addEventHandler ["Killed", {
 // handle corescripts
 if((_moduleConfig select 3) != -1 && 
 	!isNil "tf47_core_ticketsystem_fnc_registerVehicle") then {
-	[_vehicle, _moduleConfig select 3] call 
-		tf47_core_ticketsystem_fnc_registerVehicle;
+	[_vehicle, _moduleConfig select 3] remoteExecCall 
+		["tf47_core_ticketsystem_fnc_registerVehicle", 2];
 };
 
 if((_moduleConfig select 1) > 0 && (count (_moduleConfig select 5)) > 0 &&
 	!isNil "tf47_core_whitelist_fnc_registerWhitelist") then {
-	[_vehicle, _moduleConfig select 1, _moduleConfig select 5] call 
-		tf47_core_whitelist_fnc_registerWhitelist;
+	[_vehicle, _moduleConfig select 1, _moduleConfig select 5] remoteExecCall 
+		["tf47_core_whitelist_fnc_registerWhitelist", 2];
 };
