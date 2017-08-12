@@ -85,7 +85,17 @@ class tf47_modules_vs_main_dialog
         	h = 0.022 * safezoneH;
         	colorBackground[] = {-1,-1,-1,0.8};
         };
-
+        class tf47_modules_vs_main_despawn_button: tf47_modules_vs_base_rscbutton_main
+        {
+        	idc = 1603;
+        	action = "[] spawn tf47_modules_vs_fnc_despawnVehicle;";
+        	text = "Despawnen"; //--- ToDo: Localize;
+        	x = 0.525 * safezoneW + safezoneX;
+        	y = 0.64498 * safezoneH + safezoneY;
+        	w = 0.05 * safezoneW;
+        	h = 0.022 * safezoneH;
+        	colorBackground[] = {-1,-1,-1,0.8};
+        };
         class tf47_modules_vs_main_vehiclelist_listbox: tf47_modules_vs_adv_listbox
         {
             columns[] = {0,0.73,0.85};

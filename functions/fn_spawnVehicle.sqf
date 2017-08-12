@@ -19,7 +19,8 @@ _spawnCount = missionNameSpace getVariable
 // check for cap
 if(_spawnCount >= (_moduleConfig select 2)) exitWith {};
 
-if(count ((getMarkerPos _marker) nearObjects ["AllVehicles",5]) > 1)
+if(count (nearestObjects 
+	[getMarkerPos _marker, ["LandVehicle","Air", "Ship"], 5]) >= 1)
 	exitWith {
 	systemChat "Es gibt nicht genug Platz um dieses Fahrzeug zu spawnen!";
 };

@@ -6,5 +6,6 @@ class tf47_modules_vs
         class initMain {};
         class initConfig {};
         class spawnVehicle {};
+        class despawnVehicle {};
     };
 };

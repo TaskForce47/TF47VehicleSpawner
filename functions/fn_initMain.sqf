@@ -36,3 +36,4 @@ _spawnCount = missionNameSpace getVariable
     // ToDo: Test
     lnbSetData [1500, [_row, 0], str _index];
 } forEach (_curConfig select 4);
+lnbSetCurSelRow [1500, 0];
