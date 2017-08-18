@@ -18,30 +18,31 @@ _nearestObjects = nearestObjects [getMarkerPos _marker,
 
 if(count _nearestObjects < 1) exitWith {};
 
-_vehicle = _nearestObjects select 0;
+[_nearestObjects select 0, {
+	_vehicle = _this;
+	_vehicle setFuel 0;
+	if(!(_vehicle isKindOf "UAV")) then {
+		{
+			_x action ["GetOut", _vehicle];
+		} forEach crew _vehicle;
 
-_vehicle setFuel 0;
-if(!(_vehicle isKindOf "UAV")) then {
-	{
-		_x action ["GetOut", _vehicle];
-	} forEach crew _vehicle;
+		// delete ai and dead/dc people
+		{
+			_vehicle deleteVehicleCrew _x;
+		} forEach (crew _vehicle);
 
-	// delete ai and dead/dc people
-	{
-		_vehicle deleteVehicleCrew _x;
-	} forEach (crew _vehicle);
+		waitUntil {count (crew _vehicle) == 0};
 
-	waitUntil {count (crew _vehicle) == 0};
+		_vehicle lock true;
+	};
 
-	_vehicle lock true;
-};
+	_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
+	sleep 1;
 
-_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
-sleep 1;
+	_vehicle setPos [0,0,0];
+	sleep 5;
 
-_vehicle setPos [0,0,0];
-sleep 5;
-
-_vehicle setDamage 1;
-sleep 30;
-deleteVehicle _vehicle;
+	_vehicle setDamage 1;
+	sleep 30;
+	deleteVehicle _vehicle;
+}] remoteExec ["bis_fnc_spawn", 2]; 

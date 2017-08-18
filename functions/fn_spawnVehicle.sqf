@@ -37,14 +37,17 @@ missionNameSpace setVariable
 [] call tf47_modules_vs_fnc_initMain;
 
 // handle death
-[_vehicle, {_this addEventHandler["Killed", {
-    _veh = _this select 0;
-	_marker = _veh getVariable ["tf47_core_vs_originMaker", ""];
-	_spawnCount = missionNameSpace getVariable 
-    	[format["tf47_core_vs_%1_spawnCount", _marker], 0];
-	missionNameSpace setVariable 
-    	[format["tf47_core_vs_%1_spawnCount", _marker], _spawnCount - 1, true];
-}];}] remoteExecCall ["bis_fnc_call", _vehicle]; 
+_vehicle addMPEventHandler["MPKilled", {
+	if(isServer) then {
+		_veh = _this select 0;
+		_marker = _veh getVariable ["tf47_core_vs_originMaker", ""];
+		_spawnCount = missionNameSpace getVariable 
+			[format["tf47_core_vs_%1_spawnCount", _marker], 0];
+		missionNameSpace setVariable 
+			[format["tf47_core_vs_%1_spawnCount", _marker], _spawnCount - 1, 
+			true];
+	};
+}];
 
 // handle corescripts
 if((_moduleConfig select 3) != -1 && 
