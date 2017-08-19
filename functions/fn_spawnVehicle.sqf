@@ -61,3 +61,9 @@ if((_moduleConfig select 1) > 0 && (count (_moduleConfig select 5)) > 0 &&
 	[_vehicle, _moduleConfig select 1, _moduleConfig select 5] remoteExecCall 
 		["tf47_core_whitelist_fnc_registerWhitelist", 2];
 };
+
+//equip fries
+if(isNumber (configFile >> "CfgVehicles" >> (typeOf _vehicle) 
+	>> "ace_fastroping_enabled")) then {
+	[_vehicle] remoteExecCall ["ace_fastroping_fnc_equipFRIES", 2];
+};
