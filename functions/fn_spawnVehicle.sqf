@@ -29,10 +29,12 @@ if(count (nearestObjects
 _vehicle = createVehicle [_vehicleClass, getMarkerPos _marker, [], 0,
 	"CAN_COLLIDE" ];
 _vehicle setDir (markerDir _marker);
-_vehicle setVariable ["tf47_core_vs_originMaker", _marker, true];
+missionNamespace setVariable 
+        [format ["tf47_core_vs_originMarker_%1", 
+        (_vehicle call BIS_fnc_netId)], _marker, true];
+//_vehicle setVariable ["tf47_core_vs_originMaker", _marker, true];
 
-missionNameSpace setVariable 
-    [format["tf47_core_vs_%1_spawnCount", _marker], _spawnCount + 1, true];
+missionNameSpace setVariable [format["tf47_core_vs_%1_spawnCount", _marker], _spawnCount + 1, true];
 
 [] call tf47_modules_vs_fnc_initMain;
 
@@ -40,7 +42,10 @@ missionNameSpace setVariable
 _vehicle addMPEventHandler["MPKilled", {
 	if(isServer) then {
 		_veh = _this select 0;
-		_marker = _veh getVariable ["tf47_core_vs_originMaker", ""];
+		_marker = missionNamespace getVariable 
+			[format ["tf47_core_vs_originMarker_%1", 
+        	(_veh call BIS_fnc_netId)], ""];
+		//_marker = _veh getVariable ["tf47_core_vs_originMaker", ""];
 		_spawnCount = missionNameSpace getVariable 
 			[format["tf47_core_vs_%1_spawnCount", _marker], 0];
 		missionNameSpace setVariable 

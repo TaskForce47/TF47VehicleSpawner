@@ -35,9 +35,16 @@ if(count _nearestObjects < 1) exitWith {};
 
 		_vehicle lock true;
 	};
-
-	_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
-	_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle", -1];
+	
+	missionNamespace setVariable 
+		[format ["tf47_core_ticketsystem_despawn_%1", 
+		(_vehicle call BIS_fnc_netId)], true, true];
+	//_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
+	
+	_handle = missionNamespace getVariable [
+		format["tf47_core_ticketsystem_timeoutHandle_%1", 
+		_vehicle call BIS_fnc_netId], -1];
+	//_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle",           -1];
 	if(_handle != -1) then {
 		[_handle] call CBA_fnc_removePerFrameHandler;
 	};
