@@ -17,7 +17,7 @@ _vehicleClass = (_moduleConfig select 4) select _index;
 _spawnCount = missionNameSpace getVariable 
     [format["tf47_core_vs_%1_spawnCount", _marker], 0];
 // check for cap
-if(_spawnCount >= (_moduleConfig select 2)) exitWith {};
+//if(_spawnCount >= (_moduleConfig select 2)) exitWith {};
 
 if(count (nearestObjects 
 	[getMarkerPos _marker, ["LandVehicle","Air", "Ship"], 5]) >= 1)
@@ -39,6 +39,7 @@ missionNameSpace setVariable [format["tf47_core_vs_%1_spawnCount", _marker], _sp
 [] call tf47_modules_vs_fnc_initMain;
 
 // handle death
+/*
 _vehicle addMPEventHandler["MPKilled", {
 	if(isServer) then {
 		_veh = _this select 0;
@@ -53,7 +54,7 @@ _vehicle addMPEventHandler["MPKilled", {
 			true];
 	};
 }];
-
+*/
 // handle corescripts
 if((_moduleConfig select 3) != -1 && 
 	!isNil "tf47_core_ticketsystem_fnc_registerVehicle") then {

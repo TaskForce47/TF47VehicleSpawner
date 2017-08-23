@@ -30,7 +30,7 @@ _spawnCount = missionNameSpace getVariable
 {
     _config = (configFile >> "CfgVehicles" >> _x);
     _row = lnbAddRow [1500, [getText (_config >> "displayName"), 
-        str (_curConfig select 3), format["%1/%2", _spawnCount, _curConfig select 2]]];
+        str (_curConfig select 3), format["%1", _spawnCount]]];
     lnbSetPicture [1500, [_row, 0], getText (_config >> "picture")];
     lnbSetPictureColor [1500,[_row,0],[1,1,1,1]];
     // ToDo: Test
