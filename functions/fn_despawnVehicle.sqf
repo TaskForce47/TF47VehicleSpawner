@@ -13,7 +13,7 @@ _configIndex = (call compile (lnbData [1500, [_index, 0]]));
 _moduleConfig = tf47_modules_vs_config select _configIndex;
 _marker = _moduleConfig select 0;
 
-_nearestObjects = nearestObjects [getMarkerPos _marker, 
+_nearestObjects = nearestObjects [getMarkerPos _marker,
 	["LandVehicle","Air", "Ship"], 5];
 
 if(count _nearestObjects < 1) exitWith {};
@@ -23,7 +23,7 @@ if(count _nearestObjects < 1) exitWith {};
 	_vehicle setFuel 0;
 	if(!(_vehicle isKindOf "UAV")) then {
 		{
-			_x action ["GetOut", _vehicle];
+			moveOut _x;
 		} forEach crew _vehicle;
 
 		// delete ai and dead/dc people
@@ -35,25 +35,22 @@ if(count _nearestObjects < 1) exitWith {};
 
 		_vehicle lock true;
 	};
-	
-	missionNamespace setVariable 
-		[format ["tf47_core_ticketsystem_despawn_%1", 
+
+	missionNamespace setVariable
+		[format ["tf47_core_ticketsystem_despawn_%1",
 		(_vehicle call BIS_fnc_netId)], true, true];
 	//_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
-	
+
 	_handle = missionNamespace getVariable [
-		format["tf47_core_ticketsystem_timeoutHandle_%1", 
+		format["tf47_core_ticketsystem_timeoutHandle_%1",
 		_vehicle call BIS_fnc_netId], -1];
 	//_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle",           -1];
 	if(_handle != -1) then {
 		[_handle] call CBA_fnc_removePerFrameHandler;
 	};
-	sleep 1;
-
-	_vehicle setPos [0,0,0];
-	sleep 5;
-
-	_vehicle setDamage 1;
-	sleep 30;
+	_vehicle removeAllEventHandlers "GetIn";
+	_vehicle removeAllEventHandlers "SeatSwitched";
+	_vehicle removeAllEventHandlers "GetOut";
+	_vehicle removeAllMPEventHandlers "MPKilled";
 	deleteVehicle _vehicle;
-}] remoteExec ["bis_fnc_spawn", 2]; 
+}] remoteExec ["bis_fnc_spawn", 2]; //wieso schickst du dem dem server nen haufen code via netzwerk, wenn du diesen als funktion eigentlich nur hinterlegen bräuchtest?
