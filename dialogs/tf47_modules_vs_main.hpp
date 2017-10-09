@@ -88,7 +88,7 @@ class tf47_modules_vs_main_dialog
         class tf47_modules_vs_main_despawn_button: tf47_modules_vs_base_rscbutton_main
         {
         	idc = 1603;
-        	action = "[] spawn tf47_modules_vs_fnc_despawnVehicle;";
+        	action = "[((tf47_modules_vs_config select (call compile (lnbData [1500, [lnbCurSelRow 1500, 0]]))) select 0)] remoteExec ['tf47_modules_vs_fnc_despawnVehicle', 2]";
         	text = "Despawnen"; //--- ToDo: Localize;
         	x = 0.525 * safezoneW + safezoneX;
         	y = 0.64498 * safezoneH + safezoneY;

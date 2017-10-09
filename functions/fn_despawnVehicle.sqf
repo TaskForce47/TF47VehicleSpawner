@@ -1,56 +1,58 @@
 /**
  *  @author Willard
  *  @description
- *  Spawns a vehicle
- *  @params none
+ *  Despawns a vehicle
+ *  @params
+ *      param 0: The Vehicle Spawner Marker <NUMBER> (required)
  *  @return nothing
  */
  // get the config
-_index = lnbCurSelRow 1500;
+_result = _this params [
+    ["_marker", "", [""]]
+];
 
-_configIndex = (call compile (lnbData [1500, [_index, 0]]));
-
-_moduleConfig = tf47_modules_vs_config select _configIndex;
-_marker = _moduleConfig select 0;
+if(_marker == "") exitWith {};
 
 _nearestObjects = nearestObjects [getMarkerPos _marker,
 	["LandVehicle","Air", "Ship"], 5];
 
 if(count _nearestObjects < 1) exitWith {};
 
-[_nearestObjects select 0, {
-	_vehicle = _this;
-	_vehicle setFuel 0;
-	if(!(_vehicle isKindOf "UAV")) then {
-		{
-			moveOut _x;
-		} forEach crew _vehicle;
+if(typeOf (_nearestObjects select 0) == "ACE_friesAnchorBar") then {
+	deleteVehicle (_nearestObjects select 0);
+};
 
-		// delete ai and dead/dc people
-		{
-			_vehicle deleteVehicleCrew _x;
-		} forEach (crew _vehicle);
+_vehicle = (_nearestObjects select 0);
+_vehicle setFuel 0;
+if(!(_vehicle isKindOf "UAV")) then {
+	{
+		moveOut _x;
+	} forEach crew _vehicle;
 
-		waitUntil {count (crew _vehicle) == 0};
+	// delete ai and dead/dc people
+	{
+		_vehicle deleteVehicleCrew _x;
+	} forEach (crew _vehicle);
 
-		_vehicle lock true;
-	};
+	waitUntil {count (crew _vehicle) == 0};
 
-	missionNamespace setVariable
-		[format ["tf47_core_ticketsystem_despawn_%1",
-		(_vehicle call BIS_fnc_netId)], true, true];
-	//_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
+	_vehicle lock true;
+};
 
-	_handle = missionNamespace getVariable [
-		format["tf47_core_ticketsystem_timeoutHandle_%1",
-		_vehicle call BIS_fnc_netId], -1];
-	//_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle",           -1];
-	if(_handle != -1) then {
-		[_handle] call CBA_fnc_removePerFrameHandler;
-	};
-	_vehicle removeAllEventHandlers "GetIn";
-	_vehicle removeAllEventHandlers "SeatSwitched";
-	_vehicle removeAllEventHandlers "GetOut";
-	_vehicle removeAllMPEventHandlers "MPKilled";
-	deleteVehicle _vehicle;
-}] remoteExec ["bis_fnc_spawn", 2]; //wieso schickst du dem dem server nen haufen code via netzwerk, wenn du diesen als funktion eigentlich nur hinterlegen bräuchtest?
+missionNamespace setVariable
+	[format ["tf47_core_ticketsystem_despawn_%1",
+	(_vehicle call BIS_fnc_netId)], true, true];
+//_vehicle setVariable ["tf47_core_ticketsystem_despawn", true, true];
+
+_handle = missionNamespace getVariable [
+	format["tf47_core_ticketsystem_timeoutHandle_%1",
+	_vehicle call BIS_fnc_netId], -1];
+//_handle = _vehicle getVariable ["tf47_core_ticketsystem_timeoutHandle",           -1];
+if(_handle != -1) then {
+	[_handle] call CBA_fnc_removePerFrameHandler;
+};
+_vehicle removeAllEventHandlers "GetIn";
+_vehicle removeAllEventHandlers "SeatSwitched";
+_vehicle removeAllEventHandlers "GetOut";
+_vehicle removeAllMPEventHandlers "MPKilled";
+deleteVehicle _vehicle;
