@@ -15,7 +15,6 @@ _nearestMarker = [tf47_modules_vs_config_allMarkers, player] call
     BIS_fnc_nearestPosition;
 
 _index = -1;
-
 {
     if((_x select 0) == _nearestMarker) then {
         _index = _forEachIndex;
@@ -24,16 +23,21 @@ _index = -1;
 
 // populate the listbox
 _curConfig = tf47_modules_vs_config select _index;
-_spawnCount = missionNameSpace getVariable 
-    [format["tf47_core_vs_%1_spawnCount", _nearestMarker], 0];
 
-{
-    _config = (configFile >> "CfgVehicles" >> _x);
-    _row = lnbAddRow [1500, [getText (_config >> "displayName"), 
-        str (_curConfig select 3), format["%1", _spawnCount]]];
-    lnbSetPicture [1500, [_row, 0], getText (_config >> "picture")];
-    lnbSetPictureColor [1500,[_row,0],[1,1,1,1]];
-    // ToDo: Test
-    lnbSetData [1500, [_row, 0], str _index];
-} forEach (_curConfig select 4);
+for "_i" from 1 to ((count _curConfig) - 1) do {
+    _config = _curConfig select _i;
+
+    _whitelistId = _config select 1;
+    _ticketCost = _config select 2;
+    _slots = _config select 3;
+
+    {
+        _configPath = (configFile >> "CfgVehicles" >> _x);
+        _row = lnbAddRow [1500, [getText (_configPath >> "displayName"), 
+            str _ticketCost, str _whitelistId]];
+        lnbSetPicture [1500, [_row, 0], getText (_configPath >> "picture")];
+        lnbSetPictureColor [1500,[_row,0],[1,1,1,1]];
+        lnbSetData [1500, [_row, 0], str [(_curConfig select 0), _x, _whitelistId, _ticketCost, _slots]];
+    } forEach (_config select 0);
+};
 lnbSetCurSelRow [1500, 0];
