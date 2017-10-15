@@ -35,7 +35,11 @@ for "_i" from 1 to ((count _curConfig) - 1) do {
         _configPath = (configFile >> "CfgVehicles" >> _x);
         _row = lnbAddRow [1500, [getText (_configPath >> "displayName"), 
             str _ticketCost, str _whitelistId]];
-        lnbSetPicture [1500, [_row, 0], getText (_configPath >> "picture")];
+        _picture =  getText (_configPath >> "picture");
+        if(_picture == "pictureThing") then {
+            _picture = "\a3\ui_f\data\map\VehicleIcons\iconvehicle_ca.paa";
+        };
+        lnbSetPicture [1500, [_row, 0], _picture];
         lnbSetPictureColor [1500,[_row,0],[1,1,1,1]];
         lnbSetData [1500, [_row, 0], str [(_curConfig select 0), _x, _whitelistId, _ticketCost, _slots]];
     } forEach (_config select 0);

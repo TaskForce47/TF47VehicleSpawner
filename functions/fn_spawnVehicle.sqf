@@ -28,6 +28,14 @@ _vehicle = createVehicle [_vehicleClass, getMarkerPos _marker, [], 0,
 	"CAN_COLLIDE" ];
 _vehicle setDir (markerDir _marker);
 
+if(_vehicleClass == "B_supplyCrate_F" ||
+	_vehicleClass == "Box_NATO_Support_F") then {
+	clearBackpackCargoGlobal _vehicle;
+    clearWeaponCargoGlobal _vehicle;
+    clearItemCargoGlobal _vehicle;
+    clearMagazineCargoGlobal _vehicle;
+};
+
 // handle corescripts
 if((_data select 3) != -1 && 
 	!isNil "tf47_core_ticketsystem_fnc_registerVehicle") then {
