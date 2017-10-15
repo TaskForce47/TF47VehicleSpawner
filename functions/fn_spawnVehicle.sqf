@@ -18,7 +18,7 @@ _marker = _data select 0;
 _vehicleClass = _data select 1;
 
 if(count (nearestObjects 
-	[getMarkerPos _marker, ["LandVehicle","Air", "Ship"], 5]) >= 1)
+	[getMarkerPos _marker, ["LandVehicle","Air", "Ship", "Thing"], 5]) >= 1)
 	exitWith {
 	systemChat "Es gibt nicht genug Platz um dieses Fahrzeug zu spawnen!";
 };

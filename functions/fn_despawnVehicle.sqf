@@ -14,7 +14,7 @@ _result = _this params [
 if(_marker == "") exitWith {};
 
 _nearestObjects = nearestObjects [getMarkerPos _marker,
-	["LandVehicle","Air", "Ship"], 5];
+	["LandVehicle","Air", "Ship", "Thing"], 5];
 
 if(count _nearestObjects < 1) exitWith {};
 
