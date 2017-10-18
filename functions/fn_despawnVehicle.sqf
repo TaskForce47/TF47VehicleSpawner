@@ -51,8 +51,13 @@ _handle = missionNamespace getVariable [
 if(_handle != -1) then {
 	[_handle] call CBA_fnc_removePerFrameHandler;
 };
-_vehicle removeAllEventHandlers "GetIn";
-_vehicle removeAllEventHandlers "SeatSwitched";
-_vehicle removeAllEventHandlers "GetOut";
-_vehicle removeAllMPEventHandlers "MPKilled";
+_vehicle setvariable ["BIS_fnc_moduleRespawnVehicle_first", true];
+
+sleep 5;
+_vehicle setPos [0,0,0];
+
+sleep 10;
+_vehicle setDamage 1;
+
+sleep 30;
 deleteVehicle _vehicle;
