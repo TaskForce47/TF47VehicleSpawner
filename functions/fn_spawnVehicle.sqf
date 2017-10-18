@@ -44,8 +44,8 @@ if((_vehicleClass == "RHS_M119_WD" || _vehicleClass == "RHS_M119_D") &&
 if(_vehicleClass == "Land_CanisterFuel_F" 
 	&& !isNil "ace_refuel_fnc_makeJerryCan") then {
 	[_vehicle] call ace_refuel_fnc_makeJerryCan;
-	[_loadedItem, true] call ace_dragging_fnc_setDraggable;
-	[_loadedItem, true] call ace_dragging_fnc_setCarryable;
+	[_vehicle, true] call ace_dragging_fnc_setDraggable;
+	[_vehicle, true] call ace_dragging_fnc_setCarryable;
 };
 
 // handle corescripts
