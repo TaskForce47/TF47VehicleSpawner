@@ -36,6 +36,16 @@ if(_vehicleClass == "B_supplyCrate_F" ||
     clearMagazineCargoGlobal _vehicle;
 };
 
+if((_vehicleClass == "RHS_M119_WD" || _vehicleClass == "RHS_M119_D") && 
+	!isNil "ace_cargo_fnc_setSize") then {
+	[_vehicle, -1] call ace_cargo_fnc_setSize;
+};
+
+if(_vehicleClass == "Land_CanisterFuel_F" 
+	&& !isNil "ace_refuel_fnc_makeJerryCan") then {
+	[_vehicle] call ace_refuel_fnc_makeJerryCan;
+};
+
 // handle corescripts
 if((_data select 3) != -1 && 
 	!isNil "tf47_core_ticketsystem_fnc_registerVehicle") then {
