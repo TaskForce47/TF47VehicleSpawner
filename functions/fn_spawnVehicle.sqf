@@ -46,6 +46,7 @@ if(_vehicleClass == "Land_CanisterFuel_F"
 	[_vehicle] call ace_refuel_fnc_makeJerryCan;
 	[_vehicle, true] call ace_dragging_fnc_setDraggable;
 	[_vehicle, true] call ace_dragging_fnc_setCarryable;
+	[_vehicle, 1] call ace_cargo_fnc_setSize;
 };
 
 // handle corescripts
