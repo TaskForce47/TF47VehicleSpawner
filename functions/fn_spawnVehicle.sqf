@@ -44,9 +44,24 @@ if((_vehicleClass == "RHS_M119_WD" || _vehicleClass == "RHS_M119_D") &&
 if(_vehicleClass == "Land_CanisterFuel_F" 
 	&& !isNil "ace_refuel_fnc_makeJerryCan") then {
 	[_vehicle] call ace_refuel_fnc_makeJerryCan;
-	[_vehicle, true] call ace_dragging_fnc_setDraggable;
-	[_vehicle, true] call ace_dragging_fnc_setCarryable;
+	[_vehicle, true] remoteExecCall ["ace_dragging_fnc_setDraggable"];
+	[_vehicle, true] remoteExecCall ["ace_dragging_fnc_setCarryable"];
 	[_vehicle, 1] call ace_cargo_fnc_setSize;
+};
+
+if(_vehicleClass == "rhsusf_M1085A1P2_B_D_Medical_fmtv_usarmy" ||
+	_vehicleClass == "rhsusf_M1085A1P2_B_WD_Medical_fmtv_usarmy") then {
+	_vehicle setVariable ["ace_medical_isMedicalFacility", true, true];
+};
+
+if(_vehicleClass == "rhsusf_M1230a1_usarmy_wd" || 
+	_vehicleClass == "rhsusf_M1230a1_usarmy_d") then {
+	_vehicle setVariable ["ace_medical_medicClass", 1, true];
+};
+
+if((getText (configfile >> "CfgVehicles" >> _vehicleClass >> "crew")) in [
+	"B_UAV_AI", "O_UAV_AI", "I_UAV_AI", "C_UAV_AI_F"]) then {
+	createVehicleCrew _vehicle;
 };
 
 // handle corescripts
