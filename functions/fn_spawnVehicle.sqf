@@ -49,13 +49,14 @@ if(_vehicleClass == "Land_CanisterFuel_F"
 	[_vehicle, 1] call ace_cargo_fnc_setSize;
 };
 
-if(_vehicleClass == "rhsusf_M1085A1P2_B_D_Medical_fmtv_usarmy" ||
-	_vehicleClass == "rhsusf_M1085A1P2_B_WD_Medical_fmtv_usarmy") then {
+if(_vehicleClass in ["rhsusf_M1085A1P2_B_D_Medical_fmtv_usarmy",
+	"rhsusf_M1085A1P2_B_WD_Medical_fmtv_usarmy"]) then {
 	_vehicle setVariable ["ace_medical_isMedicalFacility", true, true];
 };
 
-if(_vehicleClass == "rhsusf_M1230a1_usarmy_wd" || 
-	_vehicleClass == "rhsusf_M1230a1_usarmy_d") then {
+if(_vehicleClass in ["rhsusf_M1230a1_usarmy_wd", "rhsusf_M1230a1_usarmy_d",
+	"RHS_UH60M_MEV2_d", "RHS_UH60M_MEV_d", "RHS_UH60M_MEV2", 
+	"RHS_UH60M_MEV"]) then {
 	_vehicle setVariable ["ace_medical_medicClass", 1, true];
 };
 
